@@ -1,0 +1,137 @@
+<div class="row mb-4">
+  <div class="col-12">
+    <h4><i class="bi bi-speedometer2"></i> 控制台</h4>
+    <p class="text-muted">欢迎使用搜索引擎关键词优化分析软件，快速了解各模块数据概览。</p>
+  </div>
+</div>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-3 col-6">
+    <div class="card stat-card bg-primary text-white">
+      <div class="card-body text-center">
+        <i class="bi bi-key fs-2"></i>
+        <h3 class="mt-2"><%= keywordCount %></h3>
+        <small>关键词库</small>
+      </div>
+      <a href="/keywords" class="card-footer text-white text-center small">查看详情 <i class="bi bi-arrow-right"></i></a>
+    </div>
+  </div>
+  <div class="col-md-3 col-6">
+    <div class="card stat-card bg-success text-white">
+      <div class="card-body text-center">
+        <i class="bi bi-lightbulb fs-2"></i>
+        <h3 class="mt-2"><%= suggestionCount %></h3>
+        <small>优化建议</small>
+      </div>
+      <a href="/suggestions" class="card-footer text-white text-center small">查看详情 <i class="bi bi-arrow-right"></i></a>
+    </div>
+  </div>
+  <div class="col-md-3 col-6">
+    <div class="card stat-card bg-warning text-white">
+      <div class="card-body text-center">
+        <i class="bi bi-people fs-2"></i>
+        <h3 class="mt-2"><%= userCount %></h3>
+        <small>用户</small>
+      </div>
+      <a href="/user" class="card-footer text-white text-center small">查看详情 <i class="bi bi-arrow-right"></i></a>
+    </div>
+  </div>
+  <div class="col-md-3 col-6">
+    <div class="card stat-card bg-danger text-white">
+      <div class="card-body text-center">
+        <i class="bi bi-bar-chart-line fs-2"></i>
+        <h3 class="mt-2"><%= competitorCount %></h3>
+        <small>竞争对手</small>
+      </div>
+      <a href="/competition/competitors" class="card-footer text-white text-center small">查看详情 <i class="bi bi-arrow-right"></i></a>
+    </div>
+  </div>
+</div>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-2 col-4">
+    <div class="card text-center p-3"><h5><%= trendCount %></h5><small class="text-muted">搜索趋势</small></div>
+  </div>
+  <div class="col-md-2 col-4">
+    <div class="card text-center p-3"><h5><%= trafficCount %></h5><small class="text-muted">流量来源</small></div>
+  </div>
+  <div class="col-md-2 col-4">
+    <div class="card text-center p-3"><h5><%= contentCount %></h5><small class="text-muted">内容策略</small></div>
+  </div>
+  <div class="col-md-2 col-4">
+    <div class="card text-center p-3"><h5><%= historyCount %></h5><small class="text-muted">数据历史</small></div>
+  </div>
+  <div class="col-md-2 col-4">
+    <div class="card text-center p-3"><h5><%= roleCount %></h5><small class="text-muted">角色权限</small></div>
+  </div>
+</div>
+
+<div class="row g-3">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header"><i class="bi bi-trophy"></i> 热门关键词排行</div>
+      <div class="card-body p-0">
+        <table class="table table-sm mb-0">
+          <thead><tr><th>#</th><th>关键词</th><th>搜索量</th><th>竞争度</th><th>状态</th></tr></thead>
+          <tbody>
+          <% topKeywords.forEach(function(kw, i) { %>
+            <tr>
+              <td><%= i + 1 %></td>
+              <td><%= kw.keyword %></td>
+              <td><%= kw.search_volume.toLocaleString() %></td>
+              <td><span class="badge bg-<%= kw.competition_level === '高' ? 'danger' : kw.competition_level === '中' ? 'warning' : 'success' %>"><%= kw.competition_level %></span></td>
+              <td><span class="badge bg-<%= kw.status === 'active' ? 'success' : 'secondary' %>"><%= kw.status === 'active' ? '活跃' : kw.status %></span></td>
+            </tr>
+          <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header"><i class="bi bi-lightbulb"></i> 最新优化建议</div>
+      <div class="card-body p-0">
+        <table class="table table-sm mb-0">
+          <thead><tr><th>关键词</th><th>建议</th><th>优先级</th><th>状态</th></tr></thead>
+          <tbody>
+          <% recentSuggestions.forEach(function(s) { %>
+            <tr>
+              <td><%= s.keyword || s.kw_name || '-' %></td>
+              <td><%= (s.suggestion || '').substring(0, 30) %><%= (s.suggestion || '').length > 30 ? '...' : '' %></td>
+              <td><span class="badge bg-<%= s.priority_level === '高' ? 'danger' : s.priority_level === '中' ? 'warning' : 'success' %>"><%= s.priority_level %></span></td>
+              <td><span class="badge bg-<%= s.status === 'active' ? 'success' : s.status === 'completed' ? 'info' : 'secondary' %>"><%= s.status %></span></td>
+            </tr>
+          <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if (risingTrends && risingTrends.length > 0) { %>
+<div class="row g-3 mt-1">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header"><i class="bi bi-graph-up-arrow"></i> 上升趋势关键词</div>
+      <div class="card-body p-0">
+        <table class="table table-sm mb-0">
+          <thead><tr><th>关键词</th><th>地域</th><th>搜索量</th><th>热度评分</th><th>相关关键词</th></tr></thead>
+          <tbody>
+          <% risingTrends.forEach(function(t) { %>
+            <tr>
+              <td><%= t.keyword %></td>
+              <td><%= t.region %></td>
+              <td><%= t.search_volume.toLocaleString() %></td>
+              <td><span class="badge bg-danger"><%= t.hot_score %></span></td>
+              <td><%= t.related_keywords %></td>
+            </tr>
+          <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<% } %>

@@ -1,0 +1,42 @@
+<h4><i class="bi bi-file-earmark-text"></i> 内容策略管理</h4>
+
+<form class="row g-2 mb-3" method="get" action="/traffic/content">
+  <div class="col-auto">
+    <input type="text" name="q" class="form-control" placeholder="搜索内容标题..." value="<%= q || '' %>">
+  </div>
+  <div class="col-auto"><button class="btn btn-primary"><i class="bi bi-search"></i> 搜索</button></div>
+  <div class="col-auto ms-auto">
+    <a href="/traffic/content/create" class="btn btn-success"><i class="bi bi-plus-circle"></i> 新增策略</a>
+  </div>
+</form>
+
+<div class="card mb-3">
+  <div class="card-body p-0">
+    <table class="table table-hover mb-0">
+      <thead class="table-light">
+        <tr><th>ID</th><th>内容标题</th><th>内容类型</th><th>目标受众</th><th>发布日期</th><th>策略评分</th><th>操作</th></tr>
+      </thead>
+      <tbody>
+      <% if (contents.length === 0) { %>
+        <tr><td colspan="7" class="text-center text-muted py-4">暂无数据</td></tr>
+      <% } %>
+      <% contents.forEach(function(c) { %>
+        <tr>
+          <td><%= c.id %></td>
+          <td><strong><%= c.content_title %></strong></td>
+          <td><span class="badge bg-info"><%= c.content_type %></span></td>
+          <td><%= c.target_audience %></td>
+          <td><%= c.publish_date %></td>
+          <td><span class="badge bg-<%= c.strategy_score >= 80 ? 'success' : c.strategy_score >= 60 ? 'warning' : 'secondary' %>"><%= c.strategy_score %></span></td>
+          <td>
+            <a href="/traffic/content/edit/<%= c.id %>" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></a>
+            <form method="post" action="/traffic/content/delete/<%= c.id %>" style="display:inline" data-confirm="确定要删除该内容策略吗？">
+              <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+            </form>
+          </td>
+        </tr>
+      <% }); %>
+      </tbody>
+    </table>
+  </div>
+</div>

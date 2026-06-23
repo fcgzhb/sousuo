@@ -1,0 +1,45 @@
+<h4><i class="bi bi-key"></i> <%= item ? '编辑关键词' : '新增关键词' %></h4>
+
+<div class="card">
+  <div class="card-body">
+    <form method="post" action="<%= action %>">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">关键词 <span class="text-danger">*</span></label>
+          <input type="text" name="keyword" class="form-control" required value="<%= item ? item.keyword : '' %>">
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">搜索量</label>
+          <input type="number" name="search_volume" class="form-control" value="<%= item ? item.search_volume : '' %>">
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">竞争程度</label>
+          <select name="competition_level" class="form-select">
+            <option value="低" <%= item && item.competition_level === '低' ? 'selected' : '' %>>低</option>
+            <option value="中" <%= item && item.competition_level === '中' ? 'selected' : '' %>>中</option>
+            <option value="高" <%= item && item.competition_level === '高' ? 'selected' : '' %>>高</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">状态</label>
+          <select name="status" class="form-select">
+            <option value="active" <%= item && item.status === 'active' ? 'selected' : '' %>>活跃</option>
+            <option value="pending" <%= item && item.status === 'pending' ? 'selected' : '' %>>待处理</option>
+          </select>
+        </div>
+        <div class="col-md-5">
+          <label class="form-label">标签（逗号分隔）</label>
+          <input type="text" name="tags" class="form-control" value="<%= item ? item.tags : '' %>">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">备注</label>
+          <textarea name="notes" class="form-control" rows="3"><%= item ? item.notes : '' %></textarea>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary"><i class="bi bi-check-circle"></i> 提交</button>
+          <a href="/keywords" class="btn btn-outline-secondary">取消</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

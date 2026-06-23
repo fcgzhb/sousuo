@@ -1,0 +1,46 @@
+<h4><i class="bi bi-signpost-split"></i> <%= item ? '编辑流量来源' : '新增流量来源' %></h4>
+
+<div class="card">
+  <div class="card-body">
+    <form method="post" action="<%= action %>">
+      <div class="row g-3">
+        <div class="col-md-4">
+          <label class="form-label">来源类型 <span class="text-danger">*</span></label>
+          <select name="source_type" class="form-select" required>
+            <option value="自然搜索" <%= item && item.source_type === '自然搜索' ? 'selected' : '' %>>自然搜索</option>
+            <option value="付费广告" <%= item && item.source_type === '付费广告' ? 'selected' : '' %>>付费广告</option>
+            <option value="社交媒体" <%= item && item.source_type === '社交媒体' ? 'selected' : '' %>>社交媒体</option>
+            <option value="直接访问" <%= item && item.source_type === '直接访问' ? 'selected' : '' %>>直接访问</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">来源名称</label>
+          <input type="text" name="source_name" class="form-control" value="<%= item ? item.source_name : '' %>">
+        </div>
+        <div class="col-md-2">
+          <label class="form-label">是否激活</label>
+          <div class="form-check mt-2">
+            <input type="checkbox" name="is_active" class="form-check-input" <%= item && item.is_active ? 'checked' : !item ? 'checked' : '' %> id="srcActive">
+            <label class="form-check-label" for="srcActive">激活</label>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <label class="form-label">开始日期</label>
+          <input type="date" name="start_date" class="form-control" value="<%= item ? item.start_date : '' %>">
+        </div>
+        <div class="col-md-5">
+          <label class="form-label">渠道（逗号分隔）</label>
+          <input type="text" name="channels" class="form-control" value="<%= item ? item.channels : '' %>">
+        </div>
+        <div class="col-md-5">
+          <label class="form-label">描述</label>
+          <textarea name="description" class="form-control" rows="2"><%= item ? item.description : '' %></textarea>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary"><i class="bi bi-check-circle"></i> 提交</button>
+          <a href="/traffic/sources" class="btn btn-outline-secondary">取消</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

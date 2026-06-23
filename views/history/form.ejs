@@ -1,0 +1,50 @@
+<h4><i class="bi bi-clock-history"></i> <%= item ? '编辑数据历史' : '新增数据历史' %></h4>
+
+<div class="card">
+  <div class="card-body">
+    <form method="post" action="<%= action %>">
+      <div class="row g-3">
+        <div class="col-md-4">
+          <label class="form-label">关键词 <span class="text-danger">*</span></label>
+          <input type="text" name="keyword" class="form-control" required value="<%= item ? item.keyword : '' %>">
+        </div>
+        <div class="col-md-2">
+          <label class="form-label">搜索量</label>
+          <input type="number" name="search_volume" class="form-control" value="<%= item ? item.search_volume : '' %>">
+        </div>
+        <div class="col-md-2">
+          <label class="form-label">点击率 (%)</label>
+          <input type="number" name="click_through_rate" class="form-control" step="0.1" value="<%= item ? item.click_through_rate : '' %>">
+        </div>
+        <div class="col-md-2">
+          <label class="form-label">排名</label>
+          <input type="number" name="ranking" class="form-control" value="<%= item ? item.ranking : '' %>">
+        </div>
+        <div class="col-md-2">
+          <label class="form-label">表现趋势</label>
+          <select name="performance_trend" class="form-select">
+            <option value="稳定" <%= item && item.performance_trend === '稳定' ? 'selected' : '' %>>稳定</option>
+            <option value="上升" <%= item && item.performance_trend === '上升' ? 'selected' : '' %>>上升</option>
+            <option value="下降" <%= item && item.performance_trend === '下降' ? 'selected' : '' %>>下降</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">日期范围</label>
+          <input type="text" name="date_range" class="form-control" value="<%= item ? item.date_range : '' %>" placeholder="2025-Q2">
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">影响力评分</label>
+          <input type="number" name="keyword_impact_score" class="form-control" step="0.1" value="<%= item ? item.keyword_impact_score : '' %>">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">备注</label>
+          <textarea name="notes" class="form-control" rows="2"><%= item ? item.notes : '' %></textarea>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary"><i class="bi bi-check-circle"></i> 提交</button>
+          <a href="/history" class="btn btn-outline-secondary">取消</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

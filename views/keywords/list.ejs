@@ -1,0 +1,52 @@
+<h4><i class="bi bi-key"></i> 关键词库管理</h4>
+
+<form class="row g-2 mb-3" method="get" action="/keywords">
+  <div class="col-auto">
+    <input type="text" name="q" class="form-control" placeholder="搜索关键词或ID..." value="<%= q || '' %>">
+  </div>
+  <div class="col-auto">
+    <select name="status" class="form-select">
+      <option value="">全部状态</option>
+      <option value="active" <%= status === 'active' ? 'selected' : '' %>>活跃</option>
+      <option value="pending" <%= status === 'pending' ? 'selected' : '' %>>待处理</option>
+    </select>
+  </div>
+  <div class="col-auto">
+    <button class="btn btn-primary"><i class="bi bi-search"></i> 搜索</button>
+  </div>
+  <div class="col-auto ms-auto">
+    <a href="/keywords/create" class="btn btn-success"><i class="bi bi-plus-circle"></i> 新增关键词</a>
+  </div>
+</form>
+
+<div class="card">
+  <div class="card-body p-0">
+    <table class="table table-hover mb-0">
+      <thead class="table-light">
+        <tr><th>ID</th><th>关键词</th><th>搜索量</th><th>竞争程度</th><th>状态</th><th>标签</th><th>更新时间</th><th>操作</th></tr>
+      </thead>
+      <tbody>
+      <% if (keywords.length === 0) { %>
+        <tr><td colspan="8" class="text-center text-muted py-4">暂无数据</td></tr>
+      <% } %>
+      <% keywords.forEach(function(kw) { %>
+        <tr>
+          <td><%= kw.id %></td>
+          <td><strong><%= kw.keyword %></strong></td>
+          <td><%= kw.search_volume.toLocaleString() %></td>
+          <td><span class="badge bg-<%= kw.competition_level === '高' ? 'danger' : kw.competition_level === '中' ? 'warning' : 'success' %>"><%= kw.competition_level %></span></td>
+          <td><span class="badge bg-<%= kw.status === 'active' ? 'success' : 'secondary' %>"><%= kw.status === 'active' ? '活跃' : kw.status %></span></td>
+          <td><%= kw.tags %></td>
+          <td><%= kw.updated_at %></td>
+          <td>
+            <a href="/keywords/edit/<%= kw.id %>" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i> 编辑</a>
+            <form method="post" action="/keywords/delete/<%= kw.id %>" style="display:inline" data-confirm="确定要删除关键词「<%= kw.keyword %>」吗？">
+              <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i> 删除</button>
+            </form>
+          </td>
+        </tr>
+      <% }); %>
+      </tbody>
+    </table>
+  </div>
+</div>

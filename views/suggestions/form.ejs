@@ -1,0 +1,55 @@
+<h4><i class="bi bi-lightbulb"></i> <%= item ? '编辑优化建议' : '新增优化建议' %></h4>
+
+<div class="card">
+  <div class="card-body">
+    <form method="post" action="<%= action %>">
+      <div class="row g-3">
+        <div class="col-md-4">
+          <label class="form-label">关联关键词</label>
+          <select name="keyword_id" class="form-select">
+            <option value="">-- 不关联 --</option>
+            <% keywords.forEach(function(kw) { %>
+              <option value="<%= kw.id %>" <%= item && item.keyword_id === kw.id ? 'selected' : '' %>><%= kw.keyword %></option>
+            <% }); %>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">关键词</label>
+          <input type="text" name="keyword" class="form-control" value="<%= item ? item.keyword : '' %>">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">优先级</label>
+          <select name="priority_level" class="form-select">
+            <option value="低" <%= item && item.priority_level === '低' ? 'selected' : '' %>>低</option>
+            <option value="中" <%= item && item.priority_level === '中' ? 'selected' : '' %>>中</option>
+            <option value="高" <%= item && item.priority_level === '高' ? 'selected' : '' %>>高</option>
+          </select>
+        </div>
+        <div class="col-md-8">
+          <label class="form-label">优化建议</label>
+          <textarea name="suggestion" class="form-control" rows="3"><%= item ? item.suggestion : '' %></textarea>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">状态</label>
+          <select name="status" class="form-select">
+            <option value="pending" <%= item && item.status === 'pending' ? 'selected' : '' %>>待处理</option>
+            <option value="active" <%= item && item.status === 'active' ? 'selected' : '' %>>进行中</option>
+            <option value="completed" <%= item && item.status === 'completed' ? 'selected' : '' %>>已完成</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">表现指标 (JSON)</label>
+          <input type="text" name="performance_metrics" class="form-control" value="<%= item ? item.performance_metrics : '' %>" placeholder='{"CTR":3.2,"CVR":1.8}'>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">备注</label>
+          <textarea name="notes" class="form-control" rows="2"><%= item ? item.notes : '' %></textarea>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary"><i class="bi bi-check-circle"></i> 提交</button>
+          <a href="/suggestions" class="btn btn-outline-secondary">取消</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
