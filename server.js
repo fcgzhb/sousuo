@@ -2,7 +2,7 @@ const { initDatabase } = require('./db/init');
 const { seedDatabase } = require('./db/seed');
 const app = require('./app');
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3300;
 
 const db = initDatabase();
 seedDatabase(db);
